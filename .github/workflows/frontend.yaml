@@ -1,0 +1,39 @@
+name: Frontend Deployment
+
+on:
+  push:
+    branches:
+      - master  # This triggers the workflow on any push to the master branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest  # Runs the workflow on the latest Ubuntu image
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Setup SSH for EC2 access
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Store your private key in GitHub secrets
+
+      # Step 3: Build Frontend (Replace with actual build commands if necessary)
+      - name: Build Frontend
+        run: |
+          echo "Building Frontend..."
+          # You can add any build commands here if necessary (e.g., npm install, npm run build)
+
+      # Step 4: Deploy using Docker Compose to EC2 instance
+      - name: Deploy Frontend with Docker Compose
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/osos.pem ubuntu@34.226.211.153 << 'EOF'
+            # Navigate to the correct path where Uptime Kuma is located
+            cd /opt/uptime-kuma || exit  # Ensure this path matches where Uptime Kuma is deployed
+
+            # Pull the latest Docker image and restart the container
+            docker-compose pull
+            docker-compose up -d  # Deploy using Docker Compose
+          EOF
