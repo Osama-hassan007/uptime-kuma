@@ -18,9 +18,9 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Store your private key in GitHub secrets
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # This refers to the SSH private key stored in GitHub secrets
 
-      # Step 3: Build Frontend (Replace with actual build commands if necessary)
+      # Step 3: Build Frontend (You can replace this with actual build commands if necessary)
       - name: Build Frontend
         run: |
           echo "Building Frontend..."
