@@ -29,11 +29,11 @@ jobs:
       # Step 4: Deploy using Docker Compose to EC2 instance
       - name: Deploy Frontend with Docker Compose
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/saw.pem ubuntu@3.93.170.212 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/saw.pem ubuntu@98.93.44.210 << 'EOF'
             # Navigate to the correct path where Uptime Kuma is located
             cd /opt/uptime-kuma || exit  # Ensure this path matches where Uptime Kuma is deployed
 
             # Pull the latest Docker image and restart the container
-            docker-compose pull
-            docker-compose up -d  # Deploy using Docker Compose
+            docker compose pull
+            docker compose up -d  # Deploy using Docker Compose
           EOF
